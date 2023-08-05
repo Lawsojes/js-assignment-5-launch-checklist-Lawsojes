@@ -1,8 +1,5 @@
 // Write your JavaScript code here!
 
-
-
-
 window.addEventListener("load", function() {
     
     let submitButton = document.getElementById("formSubmit");
@@ -11,11 +8,12 @@ window.addEventListener("load", function() {
     let copilotName = document.querySelector("input[name=copilotName]");
     let fuel = document.querySelector("input[name=fuelLevel]");
     let mass = document.querySelector("input[name=cargoMass]");
-    let list ="";
-    
+    let faultyItems =document.getElementById("faultyItems");
+    faultyItems.style.visibility ="hidden";
     let listedPlanets;
     //Set listedPlanetsResponse equal to the value returned by calling myFetch()
-    let listedPlanetsResponse = myFetch() ;
+    let listedPlanetsResponse;
+    listedPlanetsResponse = myFetch();
     console.log(listedPlanetsResponse);
     listedPlanetsResponse.then(function (result) {
         listedPlanets = result;
@@ -23,20 +21,21 @@ window.addEventListener("load", function() {
     }).then(function () {
         console.log(listedPlanets);
         // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
-    
-        addDestinationInfo(document, 'name', 'diameter', 'star', 'distance', 'moons', 'imageUrl');
+        let pickedPlanet = pickPlanet(listedPlanets)
+        //console.log(pickedPlanet.name)
+        addDestinationInfo(document, pickedPlanet.name, pickedPlanet.diameter, pickedPlanet.star, pickedPlanet.distance, pickedPlanet.moons, pickedPlanet.image);
 
     })
 
     
     submitButton.addEventListener("click", function(event) {
         console.log("Submit button was clicked");
-        
-        formSubmission(window.document,list,pilotName.value,copilotName.value,fuel.value,mass.value);
-        
-        
-        
         event.preventDefault();
+        
+        formSubmission(window.document,faultyItems,pilotName.value,copilotName.value,fuel.value,mass.value);
+        
+        
+        
     })
     
    console.log("page loaded")
